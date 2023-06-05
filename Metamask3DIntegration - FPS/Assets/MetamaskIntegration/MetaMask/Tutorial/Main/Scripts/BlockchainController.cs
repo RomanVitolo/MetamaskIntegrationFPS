@@ -15,21 +15,15 @@ namespace MetaMask.Unity.Tutorial
         [SerializeField] private ContractDataSO _contractDataSo;
         
         #region Events
-
-        /// <summary>Raised when the wallet is connected.</summary>
         public event EventHandler OnWalletConnected;
-        /// <summary>Raised when the wallet is disconnected.</summary>
         public event EventHandler OnWalletDisconnected;
-        /// <summary>Raised when the wallet is ready.</summary>
         public event EventHandler OnWalletReady;
-        /// <summary>Raised when the wallet is paused.</summary>
         public event EventHandler OnWalletPaused;
-        /// <summary>Raised when the user signs and sends the document.</summary>
         public event EventHandler OnSignSend;
-        /// <summary>Occurs when a transaction is sent.</summary>
         public event EventHandler OnTransactionSent;
         public event EventHandler OnSignedReady;
         public event EventHandler<string> OnBalanceReceived;
+        public event EventHandler<string> OnTransactionCountResult;
         public event EventHandler OnTransactionReady;
         public event EventHandler<MetaMaskEthereumRequestResultEventArgs> OnTransactionResult;
         public event EventHandler<MetaMaskEthereumRequestFailedEventArgs> OnEthRequestFailed;
@@ -37,10 +31,7 @@ namespace MetaMask.Unity.Tutorial
         #endregion
 
         #region Fields
-
-        /// <summary>The configuration for the MetaMask client.</summary>
         [SerializeField] protected MetaMaskConfig config;
-
         #endregion
         
         private void Awake()
@@ -77,25 +68,22 @@ namespace MetaMask.Unity.Tutorial
             OnTransactionResult?.Invoke(sender, e);
         }
 
-        /// <summary>Raised when the wallet is connected.</summary>
         private void WalletConnected(object sender, EventArgs e)
         {
             OnWalletConnected?.Invoke(this, EventArgs.Empty);
         }
 
-        /// <summary>Raised when the wallet is disconnected.</summary>
         private void WalletDisconnected(object sender, EventArgs e)
         {
             OnWalletDisconnected?.Invoke(this, EventArgs.Empty);
         }
 
-        /// <summary>Raised when the wallet is ready.</summary>
         private void WalletReady(object sender, EventArgs e)
         {
             OnWalletReady?.Invoke(this, EventArgs.Empty);
         }
         
-        /// <summary>Raised when the wallet is paused.</summary>
+       
         private void WalletPaused(object sender, EventArgs e)
         {
             OnWalletPaused?.Invoke(this, EventArgs.Empty);
@@ -206,7 +194,6 @@ namespace MetaMask.Unity.Tutorial
             };
             
             var result = await MetaMaskUnity.Instance.Wallet.Request(request);
-            Debug.Log("Gain Balance " +  " " + result);
             OnBalanceReceived?.Invoke(this, result.ToString());
             MetaMaskUnity.Instance.SaveSession();
         }
@@ -223,8 +210,7 @@ namespace MetaMask.Unity.Tutorial
             };
             
             var result = await MetaMaskUnity.Instance.Wallet.Request(request);
-            var resultIntValue = Convert.ToInt64(result.ToString(), 16);
-            Debug.Log("Send Transaction: " + resultIntValue);
+            OnTransactionCountResult?.Invoke(this, result.ToString());
         }
 
         public async void SendTransaction()
@@ -247,7 +233,6 @@ namespace MetaMask.Unity.Tutorial
             OnTransactionSent?.Invoke(this, EventArgs.Empty);
             var result = await MetaMaskUnity.Instance.Wallet.Request(request);
             _contractDataSo.ResultFromTransaction = result.ToString();
-            Debug.Log("Send Transaction: " + _contractDataSo.ResultFromTransaction);
             OnTransactionReady?.Invoke(_contractDataSo.ResultFromTransaction, EventArgs.Empty);
         }
     }
