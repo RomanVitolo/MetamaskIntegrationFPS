@@ -11,7 +11,7 @@ namespace MetaMask.Unity.Tutorial
     {
         private Contract contract;
 
-        [FormerlySerializedAs("_ethRequestStorageSo")] [SerializeField] private EthRequestsStorageSO _ethRequestsStorageSo;
+        [SerializeField] private EthRequestsStorageSO _ethRequestsStorageSo;
         [SerializeField] private ContractDataSO _contractDataSo;
         
         #region Events
@@ -63,7 +63,7 @@ namespace MetaMask.Unity.Tutorial
 
 
         #region Event Handlers
-        public void TransactionResult(object sender, MetaMaskEthereumRequestResultEventArgs e)
+        private void TransactionResult(object sender, MetaMaskEthereumRequestResultEventArgs e)
         {
             OnTransactionResult?.Invoke(sender, e);
         }
@@ -96,10 +96,7 @@ namespace MetaMask.Unity.Tutorial
 
         #endregion
                       
-        public void Connect()
-        {
-            MetaMaskUnity.Instance.Wallet.Connect();
-        }
+        public void Connect() => MetaMaskUnity.Instance.Wallet.Connect();
 
         [ContextMenu("GetContract")]
         private void GetContract()
