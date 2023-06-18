@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acd65b2445dfe1f458277644eecb7d90, type: 3}
   m_Name: ContractData
   m_EditorClassIdentifier: 
-  PriceValue: 0x2386f26fc10000
   NetworkID: 0x61
   Abi: '[{''inputs'': [{ ''internalType'': ''address'',''name'': ''collection'',''type'':
     ''address'' },{ ''internalType'': ''uint256'',''name'': ''tokenId'',''type'':
@@ -20,7 +19,7 @@ MonoBehaviour:
     ''type'': ''function''   }]'
   AddressManager: 0x42cafF4129259EE5dCD7DfD24E26B65De6afCe52
   CollectionID: 0x7933cbc9e6202ebc24b95b9895f664d83657f9a1
-  TokenID: 17
-  SetContractHash: 0xcce7ec130000000000000000000000007933cbc9e6202ebc24b95b9895f664d83657f9a10000000000000000000000000000000000000000000000000000000000000010
-  ResultFromSign: 0x101e9342c7a906397a7d41ea468b9417d05469ab39a03e564dc1810b327646a57ab18111f6b9281ac9d3b84d1000a7334035660089e0ed9ebee11508104245271b
-  ResultFromTransaction: 0x0807b6867d4e7e30213ba05e39cd21047b6ebedb4cefc11ffe4005d5755134c0
+  TokenID: 18
+  SetContractHash: 0xcce7ec130000000000000000000000007933cbc9e6202ebc24b95b9895f664d83657f9a10000000000000000000000000000000000000000000000000000000000000011
+  ResultFromSign: 
+  ResultFromTransaction: 0x2a377d6dc367db8354a0c6a6ddcfd3d2104aa1550a67f10eced09c2f64f988fe

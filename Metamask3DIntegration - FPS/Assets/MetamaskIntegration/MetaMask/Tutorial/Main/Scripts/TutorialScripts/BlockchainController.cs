@@ -1,8 +1,9 @@
 using System;
+using System.Numerics;
 using MetaMask.Models;
 using Nethereum.Contracts;
+using Nethereum.Util;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 
 namespace MetaMask.Unity.Tutorial
@@ -24,7 +25,7 @@ namespace MetaMask.Unity.Tutorial
         public event EventHandler OnSignedReady;
         public event EventHandler<string> OnBalanceReceived;
         public event EventHandler<string> OnTransactionCountResult;
-        public event EventHandler OnTransactionReady;
+        public event EventHandler OnSendTransactionResult;
         public event EventHandler<MetaMaskEthereumRequestResultEventArgs> OnTransactionResult;
         public event EventHandler<MetaMaskEthereumRequestFailedEventArgs> OnEthRequestFailed;
 
@@ -213,12 +214,12 @@ namespace MetaMask.Unity.Tutorial
         public async void SendTransaction()
         {
             GetBuyData(_contractDataSo.CollectionID, _contractDataSo.TokenID);
-
+             
             var transactionParams = new MetaMaskTransaction
             {
                 To = _contractDataSo.AddressManager,
                 From = MetaMaskUnity.Instance.Wallet.SelectedAddress,
-                Value = _contractDataSo.PriceValue,
+                Value = _contractDataSo.ConvertPriceValue(),
                 Data = _contractDataSo.SetContractHash
             };
 
@@ -230,7 +231,7 @@ namespace MetaMask.Unity.Tutorial
             OnTransactionSent?.Invoke(this, EventArgs.Empty);
             var result = await MetaMaskUnity.Instance.Wallet.Request(request);
             _contractDataSo.ResultFromTransaction = result.ToString();
-            OnTransactionReady?.Invoke(_contractDataSo.ResultFromTransaction, EventArgs.Empty);
+            OnSendTransactionResult?.Invoke(_contractDataSo.ResultFromTransaction, EventArgs.Empty);
         }
     }
 }

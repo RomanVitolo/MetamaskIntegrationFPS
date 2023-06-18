@@ -54,6 +54,7 @@ namespace MetaMask.Unity.Tutorial
             _blockchainController.OnBalanceReceived += OnBalanceReceived;
             _blockchainController.OnEthRequestFailed += OnErrorResult;
             _blockchainController.OnTransactionCountResult += OnTransactionCountReceived;
+            _blockchainController.OnSendTransactionResult += OnNotifyWhenTransactionIsComplete;
         }
 
         public void ConnectToServer() => StartCoroutine(ConnectToServerCoroutine());
@@ -157,6 +158,11 @@ namespace MetaMask.Unity.Tutorial
         private void OnTransactionSent(object sender, EventArgs e)
         {
             _currentStates.text = "Send Transaction, Please Check you Metamask App";
+        }
+        
+        private void OnNotifyWhenTransactionIsComplete(object sender, EventArgs e)
+        {
+            _currentStates.text = "Transaction Complete." + " " + "Your TransactionHash is: " + _contractDataSo.ResultFromTransaction;
         }
 
         private void OnTransactionResult(object sender, MetaMaskEthereumRequestResultEventArgs e)
