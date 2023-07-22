@@ -9,6 +9,10 @@ public class ContractDataSO : ScriptableObject
     [HideInInspector] 
     public string NetworkID = "0x61";
     [HideInInspector]
+    public string ChainName = "BSC Testnet";
+    [HideInInspector]
+    public string[] RpcUrls = {"https://data-seed-prebsc-1-s1.binance.org:8545/"};
+    [HideInInspector]
     public string Abi = @"[{'inputs': [{ 'internalType': 'address','name': 'collection','type': 'address' },{ 'internalType': 'uint256','name': 'tokenId','type': 'uint256' } ], 'name': 'buy','outputs': [], 'stateMutability': 'payable', 'type': 'function'}]";
     
     [Header("Data")]

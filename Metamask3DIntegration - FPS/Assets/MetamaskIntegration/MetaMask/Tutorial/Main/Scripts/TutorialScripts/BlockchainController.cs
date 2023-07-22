@@ -83,8 +83,7 @@ namespace MetaMask.Unity.Tutorial
         {
             OnWalletReady?.Invoke(this, EventArgs.Empty);
         }
-        
-       
+
         private void WalletPaused(object sender, EventArgs e)
         {
             OnWalletPaused?.Invoke(this, EventArgs.Empty);
@@ -96,7 +95,6 @@ namespace MetaMask.Unity.Tutorial
         }
 
         #endregion
-                      
         public void Connect() => MetaMaskUnity.Instance.Wallet.Connect();
 
         [ContextMenu("GetContract")]
@@ -114,6 +112,31 @@ namespace MetaMask.Unity.Tutorial
             var functionInput = buy.CreateCallInput(param1, param2);
             var data = functionInput.Data;
             _contractDataSo.SetContractHash = data;
+        }
+        
+        [ContextMenu(nameof(AddEthereumChain))]
+        private async void AddEthereumChain()
+        {
+            var addEthereumDetails = new AddEthereumChain()
+            {
+                ChainId = _contractDataSo.NetworkID,
+                ChainName = _contractDataSo.ChainName,
+                NativeCurrency = new NativeCurrency()
+                {
+                    Name = "Binance Coin",
+                    Symbol = "BNB",
+                    Decimals = "18"
+                },
+                RpcUrls = _contractDataSo.RpcUrls
+            };
+
+            var request = new MetaMaskEthereumRequest
+            {
+                Method = _ethRequestsStorageSo.AddEthereumChain,
+                Parameters = new AddEthereumChain[] {addEthereumDetails}
+            };
+            var result = await MetaMaskUnity.Instance.Wallet.Request(request);
+            Debug.Log("Add Chain Result: " + result);
         }
 
         private async void SwitchChainID()
@@ -151,7 +174,7 @@ namespace MetaMask.Unity.Tutorial
                                           },
                                           ""primaryType"": ""WalletConnection"",
                                           ""domain"": {
-                                            ""name"": ""Roman_Tutorial"",
+                                            ""name"": ""MetamaskTutorial"",
                                             ""version"": ""1"",
                                             ""chainId"": 97,
                                             ""verifyingContract"": ""0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC""
