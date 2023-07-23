@@ -201,6 +201,7 @@ MonoBehaviour:
   _ethRequestsStorageSo: {fileID: 11400000, guid: 33879a2b90a07ee40b8f6abbc92cfe1e,
     type: 2}
   _contractDataSo: {fileID: 11400000, guid: 359d3c5a6f150f940a54bde7b22cb67e, type: 2}
+  _signMessage: {fileID: 4900000, guid: ae562eceb64a434cbe99fc2e587641e4, type: 3}
   config: {fileID: 11400000, guid: 6cbb8289bcfbdba43817188b3b4f15e0, type: 2}
 --- !u!4 &89531376
 Transform:

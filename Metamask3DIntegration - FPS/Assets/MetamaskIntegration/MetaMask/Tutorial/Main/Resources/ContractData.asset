@@ -22,7 +22,7 @@ MonoBehaviour:
     ''type'': ''function''   }]'
   AddressManager: 0x42cafF4129259EE5dCD7DfD24E26B65De6afCe52
   CollectionID: 0x7933cbc9e6202ebc24b95b9895f664d83657f9a1
-  TokenID: 19
-  SetContractHash: 0xcce7ec130000000000000000000000007933cbc9e6202ebc24b95b9895f664d83657f9a10000000000000000000000000000000000000000000000000000000000000011
+  TokenID: 21
+  SetContractHash: 
   ResultFromSign: 
   ResultFromTransaction: 

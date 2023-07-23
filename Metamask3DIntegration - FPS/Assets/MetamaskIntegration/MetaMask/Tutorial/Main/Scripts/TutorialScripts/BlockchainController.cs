@@ -14,6 +14,7 @@ namespace MetaMask.Unity.Tutorial
 
         [SerializeField] private EthRequestsStorageSO _ethRequestsStorageSo;
         [SerializeField] private ContractDataSO _contractDataSo;
+        [SerializeField] private TextAsset _signMessage;
         
         #region Events
         public event EventHandler OnWalletConnected;
@@ -104,7 +105,7 @@ namespace MetaMask.Unity.Tutorial
         private void GetContract()
         {
             var web3 = new Nethereum.Web3.Web3("http://localhost:8545");
-            contract = web3.Eth.GetContract(_contractDataSo.Abi, _contractDataSo.AddressManager);
+            //contract = web3.Eth.GetContract(_contractDataSo.Abi, _contractDataSo.AddressManager);     Set your own Contract
         }
 
         private void GetBuyData(string collectionAddress, int tokenId)
@@ -161,36 +162,7 @@ namespace MetaMask.Unity.Tutorial
         [ContextMenu(nameof(Sign))]
         public async void Sign()
         {
-            //SwitchChainID();
-            string msgParams = @"{
-                                          ""types"": {
-                                            ""EIP712Domain"": [
-                                              { ""name"": ""name"", ""type"": ""string"" },
-                                              { ""name"": ""version"", ""type"": ""string"" },
-                                              { ""name"": ""chainId"", ""type"": ""uint256"" },
-                                              { ""name"": ""verifyingContract"", ""type"": ""address"" }
-                                            ],
-                                            ""WalletConnection"": [
-                                              { ""name"": ""User"", ""type"": ""address"" },
-                                              { ""name"": ""AppName"", ""type"": ""string"" },
-                                              { ""name"": ""Message"", ""type"": ""uint256"" },
-                                              { ""name"": ""Timestamp"", ""type"": ""uint256"" }
-                                            ]
-                                          },
-                                          ""primaryType"": ""WalletConnection"",
-                                          ""domain"": {
-                                            ""name"": ""MetamaskTutorial"",
-                                            ""version"": ""1"",
-                                            ""chainId"": 97,
-                                            ""verifyingContract"": ""0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC""
-                                          },
-                                          ""message"": {
-                                            ""User"": ""ADDRESS_HERE"",
-                                            ""AppName"": ""Roman_Tutorial_MetamaskSDK"",
-                                            ""Message"": ""Welcome to this Tutorial"",
-                                            ""Timestamp"": ""2023""
-                                          }
-                                       }";
+            string msgParams = _signMessage.text;
             
             msgParams = msgParams.Replace("ADDRESS_HERE", MetaMaskWallet.CurrentWalletAddress);
             string from = MetaMaskUnity.Instance.Wallet.SelectedAddress;
@@ -241,11 +213,11 @@ namespace MetaMask.Unity.Tutorial
 
         public async void SendTransaction()
         {
-            GetBuyData(_contractDataSo.CollectionID, _contractDataSo.TokenID);
+            //GetBuyData(_contractDataSo.CollectionID, _contractDataSo.TokenID);
              
             var transactionParams = new MetaMaskTransaction
             {
-                To = _contractDataSo.AddressManager,
+                To = _contractDataSo.AddressManager,    //Contract Address
                 From = MetaMaskUnity.Instance.Wallet.SelectedAddress,
                 Value = _contractDataSo.ConvertPriceValue(),
                 Data = _contractDataSo.SetContractHash

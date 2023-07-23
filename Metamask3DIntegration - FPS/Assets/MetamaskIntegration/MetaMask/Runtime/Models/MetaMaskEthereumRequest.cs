@@ -7,7 +7,6 @@ namespace MetaMask.Models
 
     public class MetaMaskEthereumRequest
     {
-
         [JsonProperty("id")]
         [JsonPropertyName("id")]
         public string Id { get; set; }
@@ -19,6 +18,5 @@ namespace MetaMask.Models
         [JsonProperty("params")]
         [JsonPropertyName("params")]
         public object Parameters { get; set; }
-
     }
 }
