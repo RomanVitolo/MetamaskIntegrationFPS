@@ -15,7 +15,7 @@ namespace MetaMask.Unity
         
         [JsonProperty("decimals")]
         [JsonPropertyName("decimals")]
-        public string Decimals { get; set; }
+        public int Decimals { get; set; }
     }
     
     public class AddEthereumChain
@@ -28,6 +28,8 @@ namespace MetaMask.Unity
         [JsonPropertyName("chainName")]
         public string ChainName { get; set; }
 
+        [JsonProperty("nativeCurrency")]
+        [JsonPropertyName("nativeCurrency")]
         public NativeCurrency NativeCurrency { get; set; }
         
         [JsonProperty("rpcUrls")]

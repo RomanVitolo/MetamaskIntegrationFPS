@@ -20,6 +20,8 @@ namespace MetaMask.Unity.Tutorial
         public event EventHandler OnWalletDisconnected;
         public event EventHandler OnWalletReady;
         public event EventHandler OnWalletPaused;
+        public event EventHandler OnAddEthereumChain;
+        public event EventHandler OnSwitchChainId;
         public event EventHandler OnSignSend;
         public event EventHandler OnTransactionSent;
         public event EventHandler OnSignedReady;
@@ -50,6 +52,7 @@ namespace MetaMask.Unity.Tutorial
             MetaMaskUnity.Instance.Wallet.WalletReady += WalletReady;
             MetaMaskUnity.Instance.Wallet.WalletPaused += WalletPaused;
             MetaMaskUnity.Instance.Wallet.EthereumRequestResultReceived += TransactionResult;  
+            MetaMaskUnity.Instance.Wallet.EthereumRequestFailed += OnErrorMessageEthRequest;
             MetaMaskUnity.Instance.Wallet.EthereumRequestFailed += OnErrorMessageEthRequest;
         }
         private void UnsubscribeEvents()
@@ -115,7 +118,7 @@ namespace MetaMask.Unity.Tutorial
         }
         
         [ContextMenu(nameof(AddEthereumChain))]
-        private async void AddEthereumChain()
+        public async void AddEthereumChain()
         {
             var addEthereumDetails = new AddEthereumChain()
             {
@@ -123,9 +126,9 @@ namespace MetaMask.Unity.Tutorial
                 ChainName = _contractDataSo.ChainName,
                 NativeCurrency = new NativeCurrency()
                 {
-                    Name = "Binance Coin",
+                    Decimals = 18,
+                    Name = "Base BNB",
                     Symbol = "BNB",
-                    Decimals = "18"
                 },
                 RpcUrls = _contractDataSo.RpcUrls
             };
@@ -136,10 +139,10 @@ namespace MetaMask.Unity.Tutorial
                 Parameters = new AddEthereumChain[] {addEthereumDetails}
             };
             var result = await MetaMaskUnity.Instance.Wallet.Request(request);
-            Debug.Log("Add Chain Result: " + result);
+            OnAddEthereumChain?.Invoke(this, EventArgs.Empty);
         }
 
-        private async void SwitchChainID()
+        public async void SwitchChainID()
         {
             var chainSwitchDetails = new SwitchChain()
             {
@@ -151,12 +154,14 @@ namespace MetaMask.Unity.Tutorial
                 Method = _ethRequestsStorageSo.SwitchChain,
                 Parameters = new SwitchChain[] {chainSwitchDetails}
             };
-            OnSignSend?.Invoke(this, EventArgs.Empty);
+            OnSwitchChainId?.Invoke(this, EventArgs.Empty);
             await MetaMaskUnity.Instance.Wallet.Request(request);
         }
+        
+        [ContextMenu(nameof(Sign))]
         public async void Sign()
         {
-            SwitchChainID();
+            //SwitchChainID();
             string msgParams = @"{
                                           ""types"": {
                                             ""EIP712Domain"": [
@@ -185,7 +190,7 @@ namespace MetaMask.Unity.Tutorial
                                             ""Message"": ""Welcome to this Tutorial"",
                                             ""Timestamp"": ""2023""
                                           }
-                                        }";
+                                       }";
             
             msgParams = msgParams.Replace("ADDRESS_HERE", MetaMaskWallet.CurrentWalletAddress);
             string from = MetaMaskUnity.Instance.Wallet.SelectedAddress;

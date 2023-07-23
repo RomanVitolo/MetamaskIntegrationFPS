@@ -13,13 +13,16 @@ MonoBehaviour:
   m_Name: ContractData
   m_EditorClassIdentifier: 
   NetworkID: 0x61
+  ChainName: BSC Testnet
+  RpcUrls:
+  - https://data-seed-prebsc-1-s1.binance.org:8545/
   Abi: '[{''inputs'': [{ ''internalType'': ''address'',''name'': ''collection'',''type'':
     ''address'' },{ ''internalType'': ''uint256'',''name'': ''tokenId'',''type'':
     ''uint256'' } ], ''name'': ''buy'',''outputs'': [], ''stateMutability'': ''payable'',
     ''type'': ''function''   }]'
   AddressManager: 0x42cafF4129259EE5dCD7DfD24E26B65De6afCe52
   CollectionID: 0x7933cbc9e6202ebc24b95b9895f664d83657f9a1
-  TokenID: 18
+  TokenID: 19
   SetContractHash: 0xcce7ec130000000000000000000000007933cbc9e6202ebc24b95b9895f664d83657f9a10000000000000000000000000000000000000000000000000000000000000011
   ResultFromSign: 
-  ResultFromTransaction: 0x2a377d6dc367db8354a0c6a6ddcfd3d2104aa1550a67f10eced09c2f64f988fe
+  ResultFromTransaction: 

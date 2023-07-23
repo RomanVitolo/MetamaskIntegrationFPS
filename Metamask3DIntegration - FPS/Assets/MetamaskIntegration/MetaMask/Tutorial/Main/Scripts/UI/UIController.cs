@@ -47,6 +47,8 @@ namespace MetaMask.Unity.Tutorial
             _blockchainController.OnWalletDisconnected += OnWalletDisconnected;
             _blockchainController.OnWalletPaused += OnWalletPaused;
             _blockchainController.OnWalletReady += OnWalletReady;
+            _blockchainController.OnAddEthereumChain += OnBlockchainConnection;
+            _blockchainController.OnSwitchChainId += OnNewChainConnected;
             _blockchainController.OnSignSend += OnSignSend;
             _blockchainController.OnTransactionSent += OnTransactionSent;
             _blockchainController.OnTransactionResult += OnTransactionResult;
@@ -78,6 +80,8 @@ namespace MetaMask.Unity.Tutorial
             _blockchainController.OnWalletDisconnected += OnWalletDisconnected;
             _blockchainController.OnWalletPaused += OnWalletPaused;
             _blockchainController.OnWalletReady -= OnWalletReady;
+            _blockchainController.OnAddEthereumChain -= OnBlockchainConnection;
+            _blockchainController.OnSwitchChainId -= OnNewChainConnected;
             _blockchainController.OnSignSend -= OnSignSend;
             _blockchainController.OnTransactionSent -= OnTransactionSent;
             _blockchainController.OnSignedReady -= OnSignIsReady;
@@ -97,13 +101,22 @@ namespace MetaMask.Unity.Tutorial
 
         private void OnWalletConnected(object sender, EventArgs e)
         {
+            _blockchainController.AddEthereumChain();
+        }
+
+        private void OnBlockchainConnection(object sender, EventArgs e)
+        {
+            _blockchainController.SwitchChainID();
+        }
+
+        private void OnNewChainConnected(object sender, EventArgs e)
+        {
             _blockchainController.Sign();
         }
 
         private void OnSignSend(object sender, EventArgs e)
         {
             _currentWalletAddress.text = "Current Wallet: " + MetaMaskUnity.Instance.Wallet.SelectedAddress;
-            //_blockchainController.GetBalance();
         }
         
         private void OnSignIsReady(object sender, EventArgs e)
