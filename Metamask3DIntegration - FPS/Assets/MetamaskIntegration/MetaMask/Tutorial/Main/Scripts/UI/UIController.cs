@@ -101,12 +101,13 @@ namespace MetaMask.Unity.Tutorial
 
         private void OnWalletConnected(object sender, EventArgs e)
         {
-            _blockchainController.AddEthereumChain();
+            //_blockchainController.AddEthereumChain();
+            _blockchainController.Sign();
         }
 
         private void OnBlockchainConnection(object sender, EventArgs e)
         {
-            _blockchainController.SwitchChainID();
+            //_blockchainController.SwitchChainID();
         }
 
         private void OnNewChainConnected(object sender, EventArgs e)
