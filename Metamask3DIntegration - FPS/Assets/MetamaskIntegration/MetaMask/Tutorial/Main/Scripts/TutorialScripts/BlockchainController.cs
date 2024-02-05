@@ -76,6 +76,7 @@ namespace MetaMask.Unity.Tutorial
         private void WalletConnected(object sender, EventArgs e)
         {
             OnWalletConnected?.Invoke(this, EventArgs.Empty);
+            //AddEthereumChain();
         }
 
         private void WalletDisconnected(object sender, EventArgs e)
@@ -118,7 +119,7 @@ namespace MetaMask.Unity.Tutorial
             _contractDataSo.SetContractHash = data;
         }
         
-        /*[ContextMenu(nameof(AddEthereumChain))]
+        [ContextMenu(nameof(AddEthereumChain))]
         public async void AddEthereumChain()
         {
             var addEthereumDetails = new AddEthereumChain()
@@ -141,9 +142,9 @@ namespace MetaMask.Unity.Tutorial
             };
             var result = await MetaMaskUnity.Instance.Wallet.Request(request);
             OnAddEthereumChain?.Invoke(this, EventArgs.Empty);
-        }*/
+        }
 
-        /*public async void SwitchChainID()
+        public async void SwitchChainID()
         {
             var chainSwitchDetails = new SwitchChain()
             {
@@ -157,11 +158,13 @@ namespace MetaMask.Unity.Tutorial
             };
             OnSwitchChainId?.Invoke(this, EventArgs.Empty);
             await MetaMaskUnity.Instance.Wallet.Request(request);
-        }*/
+        }
         
         [ContextMenu(nameof(Sign))]
         public async void Sign()
-        {
+        {      
+            //SwitchChainID();
+            
             string msgParams = _signMessage.text;   
             
             msgParams = msgParams.Replace("ADDRESS_HERE", MetaMaskWallet.CurrentWalletAddress);
